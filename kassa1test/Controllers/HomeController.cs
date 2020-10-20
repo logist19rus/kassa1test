@@ -23,9 +23,16 @@ namespace kassa1test.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult KreditResult(int Sum, int CreditTime, bool PeriodType, int CreditRate, bool RateType, int PayPeriod)
+        {
+            Credit credit = new Credit(Sum, CreditTime, PeriodType, CreditRate, RateType, PayPeriod);
+            return View();
+        }
+        [HttpGet]
         public IActionResult KreditResult()
         {
-            return View();
+            return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()

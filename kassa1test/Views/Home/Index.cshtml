@@ -2,7 +2,36 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <form asp-controller="Home" asp-action="KreditResult" method="post">
+        <div class="form_row">
+            <label for="Sum">Сумма кредита</label>
+            <input name="Sum" type="text" />
+        </div>
+        <div class="form_row">
+            <label for="CreditTime">Срок кредита</label>
+            <input name="CreditTime" type="text" />
+            <select name="PeriodType">
+                <option value="0">Месяцев</option>
+                <option value="1">Дней</option>
+            </select>
+        </div>
+        <div class="form_row">
+            <label for="CreditRate">Ставка</label>
+            <input name="CreditRate" type="text" />%
+            <select name="RateType">
+                <option value="0">В год</option>
+                <option value="1">В день</option>
+            </select>
+        </div>
+        <div class="form_row">
+            <label for="PayPeriod">Шаг платежа</label>
+            <select name="PayPeriod">
+                <option value="30">Ежемесячно</option>
+                <option value="15">15 дней</option>
+                <option value="10">10 дней</option>
+            </select>
+        </div>
+        <div class="form_row">
+            <input type="submit" value="Рассчитать" />
+        </div>
+    </form>
