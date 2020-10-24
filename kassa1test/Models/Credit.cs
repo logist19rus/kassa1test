@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,9 +22,61 @@ namespace kassa1test.Models
         
         public Credit(int _Sum, int _CreditTime, bool _PeriodType, double _CreditRate, bool _RateType, int _PayPeriod)
         {
+            Regex regExNumeric = new Regex("^[0-9]+$");
+            Regex regExDouble = new Regex("^[0-9]+(.[0-9]+)?$");
             DateTime StartPays = CreditDate = DateTime.Today;
             DateTime EndPays;
             PeriodType = _PeriodType;
+
+            if (_Sum>0)
+            {
+                Sum = _Sum;
+            }
+            else
+            {
+                throw new Exception("Error");
+            }
+
+            if (_CreditTime > 0)
+            {
+                if (_PeriodType)
+                {
+                    CreditTime = CreditTimeDay = _CreditTime;
+                }
+                else
+                {
+                    CreditTime = _CreditTime;
+                    CreditTimeDay = 0;
+                    DateTime month = DateTime.Today;
+                    for (int i = 0; i < _CreditTime; i++)
+                    {
+                        CreditTimeDay += DateTime.DaysInMonth(month.AddMonths(i).Year, month.AddMonths(i).Month);
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception("Error");
+            }
+
+            if (_CreditRate > 0)
+            {
+                CreditRate = _CreditRate;
+            }
+            else
+            {
+                throw new Exception("Error");
+            }
+
+            if (_PayPeriod > 0)
+            {
+                PayPeriod = _PayPeriod;
+            }
+            else
+            {
+                throw new Exception("Error");
+            }
+
             if (_PeriodType)
             {
                 EndPays = StartPays.AddDays(_CreditTime);
@@ -32,24 +85,8 @@ namespace kassa1test.Models
             {
                 EndPays = StartPays.AddMonths(_CreditTime);
             }
-            Sum = _Sum;
-            if (_PeriodType)
-            {
-                CreditTime = CreditTimeDay = _CreditTime;
-            }
-            else
-            {
-                CreditTime = _CreditTime;
-                CreditTimeDay = 0;
-                DateTime month = DateTime.Today;
-                for(int i = 0; i < _CreditTime; i++)
-                {
-                    CreditTimeDay += DateTime.DaysInMonth(month.AddMonths(i).Year, month.AddMonths(i).Month);
-                }
-            }
-            CreditRate = _CreditRate;
+
             RateType = _RateType;
-            PayPeriod = _PayPeriod;
 
             while(EndPays > StartPays)
             {

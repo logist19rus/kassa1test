@@ -1,12 +1,18 @@
-﻿@{
+﻿@model CreditForm
+@{
     ViewData["Title"] = "Home Page";
 }
-
+@if (Model.errorMsg != "")
+{
+    <script>
+        alert(@Model.errorMsg);
+    </script>
+}
 <form asp-controller="Home" asp-action="KreditResult" id="credit_form" method="post">
     <div class="form_row form-group">
         <div class="row">
             <label for="Sum" class="col-sm-2 col-form-label">Сумма кредита</label>
-            <div class="col-sm-10"><input name="Sum" type="text" id="Sum" /></div>
+            <div class="col-sm-10"><input name="Sum" type="text" id="Sum" value="@Model.Sum" /></div>
         </div>
         <small class="small form-text text-muted"></small>
     </div>
@@ -14,10 +20,19 @@
         <div class="row">
             <label for="CreditTime" class="col-sm-2 col-form-label">Срок кредита</label>
             <div class="col-sm-10">
-                <input name="CreditTime" type="text" id="CreditTime" />
+                <input name="CreditTime" type="text" id="CreditTime" value="@Model.CreditTime" />
                 <select name="PeriodType" id="PeriodType">
-                    <option value="false">Месяцев</option>
-                    <option value="true">Дней</option>
+                    @if (Model.PeriodType)
+                    {
+                        <option value="false">Месяцев</option>
+                        <option value="true" selected>Дней</option>
+                    }
+                    else
+                    {
+                        <option value="false" selected>Месяцев</option>
+                        <option value="true">Дней</option>
+                    }
+
                 </select>
             </div>
         </div>
@@ -27,10 +42,18 @@
         <div class="row">
             <label for="CreditRate" class="col-sm-2 col-form-label">Ставка</label>
             <div class="col-sm-10">
-                <input name="CreditRate" type="text" id="CreditRate" />
+                <input name="CreditRate" type="text" id="CreditRate" value="@Model.CreditRate" />
                 <select name="RateType" id="RateType">
-                    <option value="false">В год</option>
-                    <option value="true">В день</option>
+                    @if (Model.RateType)
+                    {
+                        <option value="false">В год</option>
+                        <option value="true" selected>В день</option>
+                    }
+                    else
+                    {
+                        <option value="false" selected>В год</option>
+                        <option value="true">В день</option>
+                    }
                 </select>
             </div>
         </div>
@@ -41,9 +64,31 @@
             <label for="PayPeriod" class="col-sm-2 col-form-label">Шаг платежа</label>
             <div class="col-sm-10">
                 <select name="PayPeriod" id="PayPeriod">
-                    <option value="30">Ежемесячно</option>
-                    <option value="15">15 дней</option>
-                    <option value="10">10 дней</option>
+                    @if (Model.PayPeriod == 30)
+                    {
+                        <option value="30" selected>Ежемесячно</option>
+                        <option value="15">15 дней</option>
+                        <option value="10">10 дней</option>
+                    }
+                    else if (Model.PayPeriod == 15)
+                    {
+                        <option value="30">Ежемесячно</option>
+                        <option value="15" selected>15 дней</option>
+                        <option value="10">10 дней</option>
+                    }
+                    else if (Model.PayPeriod == 10)
+                    {
+                        <option value="30">Ежемесячно</option>
+                        <option value="15" >15 дней</option>
+                        <option value="10" selected>10 дней</option>
+                    }
+                    else
+                    {
+                        <option value="30">Ежемесячно</option>
+                        <option value="15">15 дней</option>
+                        <option value="10">10 дней</option>
+                    }
+
                 </select>
             </div>
         </div>

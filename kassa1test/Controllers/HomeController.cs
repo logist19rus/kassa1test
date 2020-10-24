@@ -18,16 +18,35 @@ namespace kassa1test.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index( int Sum = 0,
+         int CreditTime = 0,
+         bool PeriodType = false,
+         double CreditRate = 0.0,
+         bool RateType = false,
+         int PayPeriod = 30,
+         string errorMsg = "")
         {
-            return View();
+            var cForm = new CreditForm(Sum, CreditTime, PeriodType, CreditRate, RateType, PayPeriod, errorMsg);
+            return View(cForm);
         }
 
         [HttpPost]
         public IActionResult KreditResult(int Sum, int CreditTime, bool PeriodType, double CreditRate, bool RateType, int PayPeriod)
         {
-            Credit credit = new Credit(Sum, CreditTime, PeriodType, CreditRate, RateType, PayPeriod);
-            return View(credit);
+            try
+            {
+                Credit credit = new Credit(Sum, CreditTime, PeriodType, CreditRate, RateType, PayPeriod);
+                return View(credit);
+            }
+            catch(Exception ex)
+            {
+                string errStr = "Не знаю как вы прошли валидацию на клиенте, но у вас ошибка";
+                var exForm = new CreditForm(Sum, CreditTime, PeriodType, CreditRate, RateType, PayPeriod, errStr);
+                if (ex.Message == "Error")
+                    return RedirectToAction("Index", "Home", new { Sum, CreditTime, PeriodType, CreditRate, RateType, PayPeriod, errorMsg = errStr });
+            }
+
+            return RedirectPermanent("Index");
         }
         [HttpGet]
         public IActionResult KreditResult()

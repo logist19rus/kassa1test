@@ -3,7 +3,7 @@
 
 // Write your JavaScript code.
 $(document).ready(function () {
-    $('#credit_form').submit(function(e) {
+    $('#credit_form1').submit(function (e) {
         var check = Validate();
         if (check == false) {
             e.preventDefault();
@@ -16,7 +16,7 @@ function Validate() {
 
     var Sum = $('#Sum').val();
     var CreditTime = $('#CreditTime').val();
-    var PeriodType = $('#PeriodType').val();    
+    var PeriodType = $('#PeriodType').val();
     var CreditRate = $('#CreditRate').val();
     var RateType = $('#RateType').val();
     var PayPeriod = $('#PayPeriod').val();
@@ -46,6 +46,10 @@ function Validate() {
             $('#Sum').parents('.form-group').children('small').html('Поле должно состоять из цифр');
             rezult = false;
         }
+        if (Sum <= 0) {
+            $('#Sum').parents('.form-group').children('small').html('Сумма кредита должна быть больше 0');
+            rezult = false;
+        }
     }
     if (CreditTime.length < 1) {
         $('#CreditTime').parents('.form-group').children('small').html('Пустое поле');
@@ -61,6 +65,10 @@ function Validate() {
             $('#CreditTime').parents('.form-group').children('small').html('Число дней должно быть кратно периоду платежа');
             rezult = false;
         }
+        else if (CreditTime <= 0) {
+            $('#CreditTime').parents('.form-group').children('small').html('Длительность кредита должна быть больше 0');
+            rezult = false;
+        }
     }
     if (CreditRate.length < 1) {
         $('#CreditRate').parents('.form-group').children('small').html('Пустое поле');
@@ -70,6 +78,10 @@ function Validate() {
         var validSum = regExDouble.test(CreditRate);
         if (!validSum) {
             $('#CreditRate').parents('.form-group').children('small').html('Поле должно состоять из цифр');
+            rezult = false;
+        }
+        else if (CreditRate <= 0) {
+            $('#CreditRate').parents('.form-group').children('small').html('Ставка кредита должна быть больше 0');
             rezult = false;
         }
     }
