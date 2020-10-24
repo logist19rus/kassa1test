@@ -1,10 +1,11 @@
 ﻿@model Credit
 @{
+    List<string> table = Model.getPayTable();
     ViewData["Title"] = "KreditResult";
 }
 
-<table>
-    <thead>
+<table class="table table-sm">
+    <thead class="thead-light">
         <tr>
             <th>Номер платежа</th>
             <th>Дата платежа</th>
@@ -13,5 +14,11 @@
             <th>Остаток основного долга</th>
         </tr>
     </thead>
+    <tbody>
+        @foreach(var x in table)
+        {
+            @Html.Raw(x)
+        }
+    </tbody>
 </table>
 

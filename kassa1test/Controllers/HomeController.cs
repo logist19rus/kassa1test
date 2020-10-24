@@ -24,10 +24,10 @@ namespace kassa1test.Controllers
         }
 
         [HttpPost]
-        public IActionResult KreditResult(int Sum, int CreditTime, bool PeriodType, int CreditRate, bool RateType, int PayPeriod)
+        public IActionResult KreditResult(int Sum, int CreditTime, bool PeriodType, double CreditRate, bool RateType, int PayPeriod)
         {
             Credit credit = new Credit(Sum, CreditTime, PeriodType, CreditRate, RateType, PayPeriod);
-            return View();
+            return View(credit);
         }
         [HttpGet]
         public IActionResult KreditResult()
