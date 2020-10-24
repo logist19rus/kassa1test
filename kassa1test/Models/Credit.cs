@@ -166,7 +166,7 @@ namespace kassa1test.Models
                 nowStr += "<tr><th class=\"row\">";
                 nowStr += (i + 1).ToString() + "</th><td>";
                 nowStr += PayDay[i].ToString("dd.MM.yyyy") + "</td><td>";
-                if (BodyPay > 0)
+                if (BodyPay >= PaySum)
                 {
                     nowStr += PaySum + "</td><td>";
                     nowStr += "0</td><td>";
@@ -174,8 +174,8 @@ namespace kassa1test.Models
                 }
                 else
                 {
-                    nowStr += Math.Abs(Math.Round(BodyPay, 2)) + "</td><td>";
-                    nowStr += Math.Round((PaySum + BodyPay), 2) + "</td><td>";
+                    nowStr += Math.Round(BodyPay, 2) + "</td><td>";
+                    nowStr += Math.Round((PaySum - BodyPay), 2) + "</td><td>";
                     BodyPay -= BodyPay;
                 }
                 nowStr += Math.Round(CreditOst, 2) + "</td></tr>";
