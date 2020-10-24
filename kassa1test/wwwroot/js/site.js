@@ -3,7 +3,7 @@
 
 // Write your JavaScript code.
 $(document).ready(function () {
-    $('#credit_form1').submit(function (e) {
+    $('#credit_form').submit(function (e) {
         var check = Validate();
         if (check == false) {
             e.preventDefault();
