@@ -4,9 +4,9 @@
 }
 @if (Model.errorMsg != "")
 {
-    <script>
-        alert(@Model.errorMsg);
-    </script>
+    <h2>
+        @Model.errorMsg
+    </h2>
 }
 <form asp-controller="Home" asp-action="KreditResult" id="credit_form" method="post">
     <div class="form_row form-group">

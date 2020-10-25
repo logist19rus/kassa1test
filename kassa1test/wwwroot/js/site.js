@@ -70,6 +70,7 @@ function Validate() {
             rezult = false;
         }
     }
+    $('#CreditRate').val($('#CreditRate').val().replace(',', '.'));
     if (CreditRate.length < 1) {
         $('#CreditRate').parents('.form-group').children('small').html('Пустое поле');
         rezult = false;
