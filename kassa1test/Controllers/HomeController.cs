@@ -40,13 +40,8 @@ namespace kassa1test.Controllers
             }
             catch(Exception ex)
             {
-                string errStr = "Не знаю как вы прошли валидацию на клиенте, но у вас ошибка";
-                var exForm = new CreditForm(Sum, CreditTime, PeriodType, CreditRate, RateType, PayPeriod, errStr);
-                if (ex.Message == "Error")
-                    return RedirectToAction("Index", "Home", new { Sum, CreditTime, PeriodType, CreditRate, RateType, PayPeriod, errorMsg = errStr });
+                return RedirectToAction("Index", "Home", new { Sum, CreditTime, PeriodType, CreditRate, RateType, PayPeriod, errorMsg = ex.Message });
             }
-
-            return RedirectPermanent("Index");
         }
         [HttpGet]
         public IActionResult KreditResult()

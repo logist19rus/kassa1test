@@ -19,6 +19,7 @@ namespace kassa1test.Models
         double PaySum; // размер выплат по кредиту в период (вычисляется)
         DateTime CreditDate; //дата взятия кредита(считается в момент генерации класса)
         List<DateTime> PayDay = new List<DateTime>(); //список всех дней в которые происходит выплата по кредиту
+        List<string> ErrorInputs = new List<string>();
         
         public Credit(int _Sum, int _CreditTime, bool _PeriodType, double _CreditRate, bool _RateType, int _PayPeriod)
         {
@@ -34,7 +35,7 @@ namespace kassa1test.Models
             }
             else
             {
-                throw new Exception("Error");
+                ErrorInputs.Add("Сумма кредита");
             }
 
             if (_CreditTime > 0)
@@ -56,7 +57,7 @@ namespace kassa1test.Models
             }
             else
             {
-                throw new Exception("Error");
+                ErrorInputs.Add("Срок кредита");
             }
 
             if (_CreditRate > 0)
@@ -65,16 +66,16 @@ namespace kassa1test.Models
             }
             else
             {
-                throw new Exception("Error");
+                ErrorInputs.Add("Ставка");
             }
 
-            if (_PayPeriod > 0)
+            if (_PayPeriod == 30 || _PayPeriod == 15 || _PayPeriod == 10)
             {
                 PayPeriod = _PayPeriod;
             }
             else
             {
-                throw new Exception("Error");
+                ErrorInputs.Add("Шаг платежа");
             }
 
             if (_PeriodType)
@@ -101,6 +102,17 @@ namespace kassa1test.Models
                 }
             }
             GetSumRez();
+            if (ErrorInputs.Count > 0)
+            {
+                string errorMsg = "";
+                errorMsg += "<ul class=\"list - group\"><li class=\"list-group-item list-group-item-warning\">В следующих полях были допущены ошибки:</li>";
+                foreach(var x in ErrorInputs)
+                {
+                    errorMsg += "<li class=\"list-group-item list-group-item-danger\">" + x + "</li>";
+                }
+                errorMsg += "</ul>";
+                throw new Exception(errorMsg);
+            }
         }
 
         void GetSumRez()
